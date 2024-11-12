@@ -50,9 +50,10 @@ void Map::loadMap(std::string filePath){
 void Map::draw(Tile* tile) {
     int x = tile->getX();
     int y = tile->getY();
+    std::stringstream outSS;
     
-    int minRowsToDraw = 10;
-    int minColsToDraw = 20;
+    int minRowsToDraw = 50;
+    int minColsToDraw = 50;
     int startRow = 0;
     int startCol = 0;
     
@@ -74,8 +75,10 @@ void Map::draw(Tile* tile) {
     
     for (int row = startRow; row < startRow + minRowsToDraw; ++row) {
         for (int col = startCol; col < startCol + minColsToDraw; ++col) {
-            std::cout << tiles[row][col]->getFormatting() << tiles[row][col]->getSymbol() << "\033[0m";
+            outSS << tiles[row][col]->getFormatting() << tiles[row][col]->getSymbol() << "\033[0m";
+//            std::cout << tiles[row][col]->getFormatting() << tiles[row][col]->getSymbol() << "\033[0m";
         }
-        std::cout << std::endl;
+        outSS << std::endl;
     }
+    std::cout << outSS.str();
 }
