@@ -20,9 +20,9 @@ int main(int argc, const char * argv[]) {
     // std::cout << "\033[1;31mbold red text\033[0m\n";
     // std::cout << "\033[5mBlink" << std::endl;
 //    DisplayMenu();
-    Map* gameMap = nullptr;
+    Map gameMap;
     try {
-        gameMap->loadMap("/Users/joshuaortmann/cosc1437/Projects/FinalProject/FinalProject/data/map.txt");
+        gameMap.loadMap("/Users/joshuaortmann/cosc1437/Projects/FinalProject/FinalProject/data/map.txt");
     }
     catch (MapFileReadError e) {
         std::cout << "Error Message: " << e.getMessage() << std::endl;
@@ -34,12 +34,12 @@ int main(int argc, const char * argv[]) {
 //    int pos_x = 48;
 //    int pos_y = 1;
   
-    Player pl(gameMap, 48, 1);
+    Player pl(&gameMap, 48, 1);
     
 //    std::cout << "\033[42m" << "testText" << "\033[0m" << std::endl;
 //    std::cout << "\033[7m" << "testText2" << std::endl;
     
-    gameMap->draw(pl.getLoc());
+    gameMap.draw(pl.getLoc());
     std::cout << std::endl << std::endl << std::endl;
     char directionInput;
     std::cout << "Movement options: a=left, w=up, s=down, d=right" << std::endl;
@@ -64,7 +64,7 @@ int main(int argc, const char * argv[]) {
                 break;
         }
 //        pl.move(gameMap.getTile(pos_x, pos_y));
-        gameMap->draw(pl.getLoc());
+        gameMap.draw(pl.getLoc());
         std::cout << std::endl << std::endl << std::endl;
         std::cout << "Movement options: a=left, w=up, s=down, d=right" << std::endl;
         std::cout << "pl.x: " << pl.getLoc()->getX() << std::endl;
