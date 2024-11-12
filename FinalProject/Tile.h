@@ -35,6 +35,7 @@ public:
     int getY();
     std::string getFormatting();
     void setPlayerTile();
-    ~Tile();
     std::string getType();
+    ~Tile();
+    
 };

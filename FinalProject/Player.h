@@ -18,4 +18,5 @@ public:
 //    ~Player();
     void move(int, int);
     Tile* getLoc();
+    void printStatus();
 };

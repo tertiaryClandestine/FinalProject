@@ -4,6 +4,9 @@ Player::Player(Map* _map, int _x, int _y){
     gameMap = _map;
     playerLoc = gameMap->getTile(_x, _y);
     playerLoc->setPlayerTile();
+    health = 100;
+    gold = 0;
+    attackPower = 5;
 }
 Tile* Player::getLoc(){
     return playerLoc;
