@@ -52,7 +52,7 @@ void Map::draw(Tile* tile) {
     int y = tile->getY();
     
     int minRowsToDraw = 10;
-    int minColsToDraw = 10;
+    int minColsToDraw = 20;
     int startRow = 0;
     int startCol = 0;
     

@@ -9,9 +9,10 @@ Tile* Player::getLoc(){
     return playerLoc;
 }
 void Player::move(int deltaX, int deltaY){
-    if (gameMap->getTile(playerLoc->getX() + deltaX, playerLoc->getY() + deltaY)->getType() != "Wall"){
+    Tile* nextTile = gameMap->getTile(playerLoc->getX() + deltaX, playerLoc->getY() + deltaY);
+    if (nextTile->getType() != "Wall"){
         playerLoc->setPlayerTile();
-        playerLoc = gameMap->getTile(playerLoc->getX() + deltaX, playerLoc->getY() + deltaY);
+        playerLoc = nextTile;
         playerLoc->setPlayerTile();
     }
     
