@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <cstdlib>
+#include <ctime>
 
 class Tile {
     /*
@@ -19,7 +21,7 @@ private:
     bool isPlayerTile;
     bool treasure;
     int treasureVal;
-    double enemyChance;
+    int enemyChance; //value is
     int x;
     int y;
     void setSymbol(const char&);

@@ -1,14 +1,14 @@
 #pragma once
 #include "Map.h"
+#include "Treasure.h"
 //#include "Tile.h"
 
 
 class Player {
 private:
-    char tileSymbol;
-//    std::string previousTileFormat;
     Map* gameMap;
     Tile* playerLoc;
+    Treasure* inventory[50];
     int health;
     int gold;
     double attackPower;

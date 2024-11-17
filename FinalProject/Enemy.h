@@ -1,10 +1,17 @@
+#include <cstdlib>
+#include <ctime>
+
 class Enemy {
 private:
     int hitpoints;
     int attackPower;
     
 public:
-    Enemy(int _hitpoints) { hitpoints = _hitpoints; }
+    Enemy(int _hitpoints, int _attackPower) {
+        hitpoints = _hitpoints;
+        attackPower = _attackPower;
+    }
     virtual void attack() const = 0;
-    virtual int getHipoints() const = 0;
+    virtual int getHipoints();
+    virtual int getAttackPower();
 };
