@@ -22,6 +22,7 @@ public:
 class Map {
 private:
     Tile* tiles[50][50];
+    
 public:
     Map();
     void loadMap(std::string);

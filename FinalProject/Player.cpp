@@ -20,3 +20,10 @@ void Player::move(int deltaX, int deltaY){
     }
     
 }
+Player::Player(){
+    gameMap = nullptr;
+    playerLoc = nullptr;
+    health = 100;
+    gold = 0;
+    attackPower = 5;
+}

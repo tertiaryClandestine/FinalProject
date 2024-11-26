@@ -4,40 +4,53 @@
 #include <iomanip>
 #include "Map.h"
 #include "Player.h"
+#include <filesystem>
+#include "GameSession.h"
 
-//std::string centerAlign(std::string str, int width) {
-//    std::stringstream outSS;
-//    int padding = (width / 2) - (str.length() / 2);
-//    outSS <<
-//}
 
-void DisplayMainMenu() {
+
+int DisplayMainMenu() {
     std::cout << "-------DungeonMaster-------" << std::endl;
-    std::cout << "1. Continue" << std::endl;
+//    if (!std::filesystem::is_empty("savedata")){
+//        std::cout << "0. Continue" << std::endl;
+//    }
+    int selection;
+
+    std::cout << "1. New" << std::endl;
     std::cout << "2. Load" << std::endl;
-    std::cout << "3. New" << std::endl;
+    std::cout << "3. Delete" << std::endl;
     std::cout << "4. Quit" << std::endl;
+    std::cout << "Select from the above options by numerical entry:";
+    std::cin >> selection;
+    
+    return selection;
+}
+void StartGame() {
+    
 }
 
 int main(int argc, const char * argv[]) {
     
-
+    GameSession gs;
+    gs.New();
 //    DisplayMainMenu();
     
-//        std::string mapFileName = "/Users/joshuaortmann/cosc1437/Projects/FinalProject/FinalProject/data/map.txt";
-    std::string mapFileName = "data/map.txt";
+//    std::filesystem::create_directories("savedata/1");
     
     
-    Map gameMap;
-    try {
-        gameMap.loadMap(mapFileName);
-    }
-    catch (MapFileReadError e) {
-        std::cout << "Error Message: " << e.getMessage() << std::endl;
-    }
-    catch (TileInitializationError e) {
-        std::cout << "Error Message: " << e.getMessage() << std::endl;
-    }
+//    std::string mapFileName = "data/map.txt";
+    
+    
+//    Map gameMap;
+//    try {
+//        gameMap.loadMap(mapFileName);
+//    }
+//    catch (MapFileReadError e) {
+//        std::cout << "Error Message: " << e.getMessage() << std::endl;
+//    }
+//    catch (TileInitializationError e) {
+//        std::cout << "Error Message: " << e.getMessage() << std::endl;
+//    }
 //  
 //    Player pl(&gameMap, 48, 1);
 //    

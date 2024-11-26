@@ -7,6 +7,7 @@ Map::Map(){
             tiles[row][col] = nullptr;
         }
     }
+    loadMap("gamedata/map.txt");
 }
 Map::~Map(){
     
