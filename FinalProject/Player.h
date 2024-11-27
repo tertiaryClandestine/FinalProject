@@ -3,7 +3,13 @@
 #include "Treasure.h"
 //#include "Tile.h"
 
-
+class PlayerFileReadError{
+private:
+    std::string message;
+public:
+    PlayerFileReadError(std::string m):message(m) {}
+    std::string getMessage() { return message; }
+};
 class Player {
 private:
     Map* gameMap;
@@ -12,13 +18,18 @@ private:
     int health;
     int gold;
     double attackPower;
-    
+    void Load();
 public:
+//    Player();
     Player(Map* _map, int, int);
+    Player(Map*, std::string);
+    
     Player();
     Tile* GetLoc();
 //    ~Player();
     void Move(int, int);
     void Status();
-    void Save();
+    void Save(std::string);
+    void Load(std::string);
+    
 };

@@ -35,7 +35,9 @@ int main(int argc, const char * argv[]) {
     GameSession gs;
     gs.New();
     gs.Save(1);
-    gs.Load(1);
+//    gs.Load(1);
+//    gs.Save(1);
+//    gs.Load(1);
 //    gs.Save(1);
 //    DisplayMainMenu();
     
