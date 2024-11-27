@@ -18,7 +18,7 @@ private:
     int health;
     int gold;
     double attackPower;
-    void Load();
+    void Load(std::string);
 public:
 //    Player();
     Player(Map* _map, int, int);
@@ -30,6 +30,6 @@ public:
     void Move(int, int);
     void Status();
     void Save(std::string);
-    void Load(std::string);
+    
     
 };

@@ -14,6 +14,10 @@ Player::Player(Map* _map, int _x, int _y){
     inventory[4] = new Treasure(20, "Hatchet", "Can be used to cut down trees");
     
 }
+Player::Player(Map* _map, std::string filePath) {
+    gameMap = _map;
+    Load(filePath);
+}
 Tile* Player::GetLoc(){
     return playerLoc;
 }
@@ -51,7 +55,62 @@ void Player::Load(std::string filePath){
     std::ifstream inputFile(filePath);
     if(!inputFile.is_open())
         throw PlayerFileReadError("unable to open file: " + filePath);
+    std::string line;
+    std::stringstream inSS;
+    int _x = 0;
+    int _y = 0;
+    int _health = 0;
+    int _gold = 0;
+    double _attackPower = 0.0;
+    int _treasureIdx = 0;
+    int _treasureGoldVal = 0;
+    std::string _treasureName = "";
+    std::string _treasureDescription = "";
+    int i = 0;
     
+    while (getline(inputFile, line)) {
+        inSS.clear();
+        inSS.str(line);
+        switch (i) {
+            case 0:
+                inSS >> _x;
+                ++i;
+                break;
+            case 1:
+                inSS >> _y;
+                ++i;
+                break;
+            case 2:
+                inSS >> _health;
+                ++i;
+                break;
+            case 3:
+                inSS >> _gold;
+                ++i;
+                break;
+            case 4:
+                inSS >> _attackPower;
+                ++i;
+                break;
+            
+            default:
+                inSS >> _treasureIdx;
+                inSS >> _treasureGoldVal;
+                inSS >> _treasureName;
+                inSS << ignore
+                getline(inSS, _treasureDescription);
+//                inSS >> std::noskipws >> _treasureDescription >> std:: skipws;
+                inventory[_treasureIdx] = new Treasure(_treasureGoldVal, _treasureName, _treasureDescription);
+                ++i;
+                break;
+        }
+    }
+    
+    playerLoc = gameMap->getTile(_x, _y);
+    playerLoc->setPlayerTile();
+    health = _health;
+    gold = _gold;
+    attackPower = _attackPower;    
 }
 //Player::Player(){
 //    gameMap = nullptr;

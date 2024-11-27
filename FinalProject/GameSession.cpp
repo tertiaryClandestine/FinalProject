@@ -70,8 +70,12 @@ void GameSession::Load(int slotID){
     }
     try {
         map = new Map(slotDir + "/map.txt");
+        player = new Player(map, slotDir + "/player.txt");
     }
     catch (MapFileReadError e){
+        std::cout << "Error Message: " << e.getMessage() << std::endl;
+    }
+    catch (PlayerFileReadError e){
         std::cout << "Error Message: " << e.getMessage() << std::endl;
     }
 }
