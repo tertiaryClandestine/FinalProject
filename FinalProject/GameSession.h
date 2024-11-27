@@ -18,11 +18,11 @@ private:
     
 public:
     GameSession();
-    void New();
+    void New(std::string filePath = "gamedata/map.txt");
     void Save(int);
     void Load(int);
     void Delete(int);
-    Player* GetPlayer();
-    Map* GetMap();
+//    Player* GetPlayer();
+//    Map* GetMap();
     
 };

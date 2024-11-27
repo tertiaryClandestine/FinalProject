@@ -17,7 +17,8 @@ public:
     Player(Map* _map, int, int);
     Player();
 //    ~Player();
-    void move(int, int);
-    Tile* getLoc();
-    void printStatus();
+    void Move(int, int);
+    Tile* GetLoc();
+    void Status();
+    void Save();
 };

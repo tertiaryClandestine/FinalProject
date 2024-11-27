@@ -8,10 +8,10 @@ Player::Player(Map* _map, int _x, int _y){
     gold = 0;
     attackPower = 5;
 }
-Tile* Player::getLoc(){
+Tile* Player::GetLoc(){
     return playerLoc;
 }
-void Player::move(int deltaX, int deltaY){
+void Player::Move(int deltaX, int deltaY){
     Tile* nextTile = gameMap->getTile(playerLoc->getX() + deltaX, playerLoc->getY() + deltaY);
     if (nextTile->getType() != "Wall"){
         playerLoc->setPlayerTile();

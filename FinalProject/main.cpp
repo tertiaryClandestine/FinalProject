@@ -31,8 +31,13 @@ void StartGame() {
 
 int main(int argc, const char * argv[]) {
     
+//    std::ofstream outputFile("savedata/1/map.txt");
+//    outputFile.close();
+    
     GameSession gs;
+    
     gs.New();
+    gs.Save(1);
 //    DisplayMainMenu();
     
 //    std::filesystem::create_directories("savedata/1");

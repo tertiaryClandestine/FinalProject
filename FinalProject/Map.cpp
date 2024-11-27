@@ -1,13 +1,13 @@
 //#pragma once
 #include "Map.h"
 
-Map::Map(){
+Map::Map(std::string filePath){
     for (int row = 0; row < 50; ++row){
         for (int col = 0; col < 50; ++col){
             tiles[row][col] = nullptr;
         }
     }
-    loadMap("gamedata/map.txt");
+    Load(filePath);
 }
 Map::~Map(){
     
@@ -17,7 +17,7 @@ Tile* Map::getTile(int x, int y){
 }
 
 
-void Map::loadMap(std::string filePath){
+void Map::Load(std::string filePath){
     std::ifstream inputFile(filePath);
     std::string line;
     std::stringstream inSS;
@@ -27,28 +27,45 @@ void Map::loadMap(std::string filePath){
     int row = 0;
     int col = 0;
 
-    if (!inputFile.is_open()){
+    if (!inputFile.is_open())
         throw MapFileReadError("unable to open file");
-    } else {
-        while (getline(inputFile, line)) {
-            inSS.clear();
-            inSS.str(line);
-            while (inSS >> chTile) {
-                tile = new Tile(chTile, row, col);
-                if (tile == nullptr) {
-                    throw TileInitializationError("error allocating tile pointer");
-                }
-                tiles[row][col] = tile;
-                ++col;
+    while (getline(inputFile, line)) {
+        inSS.clear();
+        inSS.str(line);
+        while (inSS >> chTile) {
+            tile = new Tile(chTile, row, col);
+            if (tile == nullptr) {
+                throw TileInitializationError("error allocating tile pointer");
             }
-            col = 0;
-            ++row;
+            tiles[row][col] = tile;
+            ++col;
         }
+        col = 0;
+        ++row;
     }
     inputFile.close();
 
 }
-void Map::draw(Tile* tile) {
+void Map::Save(std::string filePath){
+    std::ofstream outputFile(filePath);
+//    std::string line;
+    std::stringstream outSS;
+    int row = 0;
+    int col = 0;
+    
+    if(!outputFile.is_open())
+        throw MapFileReadError("unable to create file: " + filePath);
+    for (row = 0; row < 50; ++row){
+        for (col = 0; col < 50; ++col) {
+            outSS << tiles[row][col]->getSymbol();
+        }
+        outSS << std::endl;
+    }
+    outputFile << outSS.str();
+    outputFile.close();
+    
+}
+void Map::Draw(Tile* tile) {
     int x = tile->getX();
     int y = tile->getY();
     std::stringstream outSS;

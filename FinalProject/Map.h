@@ -24,9 +24,10 @@ private:
     Tile* tiles[50][50];
     
 public:
-    Map();
-    void loadMap(std::string);
-    void draw(Tile*);
+    Map(std::string);
+    void Load(std::string);
+    void Save(std::string);
+    void Draw(Tile*);
     Tile* getTile(int,int);
     ~Map();
 };
