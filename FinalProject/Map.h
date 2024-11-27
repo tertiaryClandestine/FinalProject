@@ -22,10 +22,9 @@ public:
 class Map {
 private:
     Tile* tiles[50][50];
-    
+    void Load(std::string);
 public:
     Map(std::string);
-    void Load(std::string);
     void Save(std::string);
     void Draw(Tile*);
     Tile* getTile(int,int);

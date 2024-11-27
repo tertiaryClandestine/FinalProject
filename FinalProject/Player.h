@@ -16,9 +16,9 @@ private:
 public:
     Player(Map* _map, int, int);
     Player();
+    Tile* GetLoc();
 //    ~Player();
     void Move(int, int);
-    Tile* GetLoc();
     void Status();
     void Save();
 };

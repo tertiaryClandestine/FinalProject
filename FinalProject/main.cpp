@@ -7,8 +7,6 @@
 #include <filesystem>
 #include "GameSession.h"
 
-
-
 int DisplayMainMenu() {
     std::cout << "-------DungeonMaster-------" << std::endl;
 //    if (!std::filesystem::is_empty("savedata")){
@@ -35,9 +33,10 @@ int main(int argc, const char * argv[]) {
 //    outputFile.close();
     
     GameSession gs;
-    
     gs.New();
     gs.Save(1);
+    gs.Load(1);
+//    gs.Save(1);
 //    DisplayMainMenu();
     
 //    std::filesystem::create_directories("savedata/1");

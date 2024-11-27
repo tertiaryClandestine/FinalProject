@@ -22,7 +22,7 @@ public:
     void Save(int);
     void Load(int);
     void Delete(int);
-//    Player* GetPlayer();
-//    Map* GetMap();
+    Player* GetPlayer();
+    Map* GetMap();
     
 };

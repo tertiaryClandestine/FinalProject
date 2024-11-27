@@ -56,11 +56,26 @@ void GameSession::Load(int saveSlot){
     map = nullptr;
     player = nullptr;
     
+//    map = new Map(
+    if (!SlotExists(saveSlot)) {
+        std::filesystem::create_directory(PATH_SAVEDATA + "/" + std::to_string(saveSlot));
+    }
+    try {
+        map = new Map(PATH_SAVEDATA + "/" + std::to_string(saveSlot) + "/map.txt");
+    }
+    catch (MapFileReadError e){
+        std::cout << "Error Message: " << e.getMessage() << std::endl;
+    }
+    
+    
+    
     /*
      load the data from the slot into memory
      */
 }
-//Player* GameSession::GetPlayer(){
-//    return player;
-//}
-
+Player* GameSession::GetPlayer(){
+    return player;
+}
+Map* GameSession::GetMap(){
+    return map;
+}
