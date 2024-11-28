@@ -7,12 +7,6 @@ Player::Player(Map* _map, int _x, int _y){
     health = 100;
     gold = 0;
     attackPower = 5;
-    inventory[0] = new Treasure(500, "Ruby", "Shiny! But also red");
-    inventory[1] = new Treasure(750, "Diamond", "Shiny! But also clear");
-    inventory[2] = new Treasure(5, "Wood", "Can be used to craft items");
-    inventory[3] = new Treasure(3, "Tar", "Useless");
-    inventory[4] = new Treasure(20, "Hatchet", "Can be used to cut down trees");
-    
 }
 Player::Player(Map* _map, std::string filePath) {
     gameMap = _map;
@@ -27,6 +21,8 @@ void Player::Move(int deltaX, int deltaY){
         playerLoc->setPlayerTile();
         playerLoc = nextTile;
         playerLoc->setPlayerTile();
+    } else if (nextTile->getType() != "Enemy") {
+        
     }
 }
 void Player::Save(std::string filePath){
@@ -112,6 +108,13 @@ void Player::Load(std::string filePath){
     health = _health;
     gold = _gold;
     attackPower = _attackPower;    
+}
+void Player::Status(){
+    std::stringstream outSS;
+    outSS << "Health: " << std::to_string(health) << "/100" << std::endl;
+    outSS << "Attack Power: " << std::to_string(attackPower) << std::endl;
+    outSS << "Gold: " << std::to_string(gold) << std::endl;
+    std::cout << outSS.str();
 }
 //Player::Player(){
 //    gameMap = nullptr;

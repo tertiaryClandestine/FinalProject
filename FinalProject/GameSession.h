@@ -16,6 +16,7 @@ private:
     Map* map;
     bool SlotExists(int);
     
+    
 public:
     GameSession();
     void New(std::string filePath = "gamedata/map.txt");
@@ -24,5 +25,6 @@ public:
     void Delete(int);
     Player* GetPlayer();
     Map* GetMap();
+    void Play();
     
 };

@@ -37,6 +37,7 @@ void GameSession::New(std::string filePath){
         std::cout << "Error Message: " << e.getMessage() << std::endl;
     }
     player = new Player(map, 48, 1);
+    Save(0);
 }
 void GameSession::Save(int slotID){
     if (map == nullptr || player == nullptr){
@@ -84,4 +85,33 @@ Player* GameSession::GetPlayer(){
 }
 Map* GameSession::GetMap(){
     return map;
+}
+void GameSession::Play(){
+    char directionInput = ' ';
+    while (directionInput != 'x') {
+        std::cout << "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n";
+        map->Draw(player->GetLoc());
+        player->Status();
+        std::cout << "Movement options: a=left, w=up, s=down, d=right...x=exit" << std::endl;
+//        std::cout << "player.x: " << player->GetLoc()->getX() << std::endl;
+//        std::cout << "player.y: " << player->GetLoc()->getY() << std::endl;
+        std::cin.clear();
+        std::cin >> directionInput;
+        switch (directionInput) {
+            case 'w':
+                player->Move(-1, 0);
+                break;
+            case 's':
+                player->Move(1, 0);
+                break;
+            case 'd':
+                player->Move(0, 1);
+                break;
+            case 'a':
+                player->Move(0, -1);
+                break;
+            default:
+                break;
+        }
+    }
 }

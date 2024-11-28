@@ -28,7 +28,7 @@ void Map::Load(std::string filePath){
     int col = 0;
 
     if (!inputFile.is_open())
-        throw MapFileReadError("unable to open file");
+        throw MapFileReadError("unable to open file: " + filePath);
     while (getline(inputFile, line)) {
         inSS.clear();
         inSS.str(line);
@@ -70,8 +70,8 @@ void Map::Draw(Tile* tile) {
     int y = tile->getY();
     std::stringstream outSS;
     
-    int minRowsToDraw = 50;
-    int minColsToDraw = 50;
+    int minRowsToDraw = 10;
+    int minColsToDraw = 30;
     int startRow = 0;
     int startCol = 0;
     
