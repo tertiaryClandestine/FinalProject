@@ -97,7 +97,8 @@ void Player::Load(std::string filePath){
                 inSS >> _treasureIdx;
                 inSS >> _treasureGoldVal;
                 inSS >> _treasureName;
-                inSS << ignore
+//                inSS << ignore
+                inSS.ignore();
                 getline(inSS, _treasureDescription);
 //                inSS >> std::noskipws >> _treasureDescription >> std:: skipws;
                 inventory[_treasureIdx] = new Treasure(_treasureGoldVal, _treasureName, _treasureDescription);
