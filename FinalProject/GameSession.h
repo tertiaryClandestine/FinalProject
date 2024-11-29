@@ -15,6 +15,7 @@ private:
     Player* player;
     Map* map;
     bool SlotExists(int);
+    int saveSlot;
     
     
 public:
@@ -26,5 +27,5 @@ public:
     Player* GetPlayer();
     Map* GetMap();
     void Play();
-    
+    int DisplaySlots();
 };

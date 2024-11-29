@@ -57,6 +57,9 @@ void Map::Save(std::string filePath){
         throw MapFileReadError("unable to create file: " + filePath);
     for (row = 0; row < 50; ++row){
         for (col = 0; col < 50; ++col) {
+            if (tiles[row][col]->getSymbol() == '!'){
+                tiles[row][col]->setPlayerTile();
+            }
             outSS << tiles[row][col]->getSymbol();
         }
         outSS << std::endl;

@@ -7,9 +7,14 @@ Player::Player(Map* _map, int _x, int _y){
     health = 100;
     gold = 0;
     attackPower = 5;
+    inventoryCount = 0;
 }
 Player::Player(Map* _map, std::string filePath) {
     gameMap = _map;
+    Load(filePath);
+}
+Player::Player(std::string filePath) {
+//    gameMap = _map;
     Load(filePath);
 }
 Tile* Player::GetLoc(){
@@ -21,9 +26,13 @@ void Player::Move(int deltaX, int deltaY){
         playerLoc->setPlayerTile();
         playerLoc = nextTile;
         playerLoc->setPlayerTile();
-    } else if (nextTile->getType() != "Enemy") {
-        
     }
+    if (nextTile->getType() == "Enemy") {
+        Combat();
+    }
+}
+void Player::Combat(){
+    
 }
 void Player::Save(std::string filePath){
     std::ofstream outputFile(filePath);
@@ -35,8 +44,9 @@ void Player::Save(std::string filePath){
     outSS << health << std::endl;
     outSS << gold << std::endl;
     outSS << attackPower << std::endl;
+    outSS << inventoryCount << std::endl;
     
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < inventoryCount; ++i) {
         outSS << std::to_string(i) << "\t";
         outSS << inventory[i]->getGoldVal() << "\t";
         outSS << inventory[i]->getName() << "\t";
@@ -58,6 +68,7 @@ void Player::Load(std::string filePath){
     int _health = 0;
     int _gold = 0;
     double _attackPower = 0.0;
+    int _treasureCount = 0;
     int _treasureIdx = 0;
     int _treasureGoldVal = 0;
     std::string _treasureName = "";
@@ -88,6 +99,10 @@ void Player::Load(std::string filePath){
                 inSS >> _attackPower;
                 ++i;
                 break;
+            case 5:
+                inSS >> _treasureCount;
+                ++i;
+                break;
             
             default:
                 inSS >> _treasureIdx;
@@ -103,15 +118,21 @@ void Player::Load(std::string filePath){
         }
     }
     
-    playerLoc = gameMap->getTile(_x, _y);
-    playerLoc->setPlayerTile();
     health = _health;
     gold = _gold;
-    attackPower = _attackPower;    
+    attackPower = _attackPower;
+    inventoryCount = _treasureCount;
+    
+    if (gameMap != nullptr) {
+        playerLoc = gameMap->getTile(_x, _y);
+        playerLoc->setPlayerTile();
+    }   
+
 }
 void Player::Status(){
     std::stringstream outSS;
     outSS << "Health: " << std::to_string(health) << "/100" << std::endl;
+    outSS << std::fixed << std::setprecision(0);
     outSS << "Attack Power: " << std::to_string(attackPower) << std::endl;
     outSS << "Gold: " << std::to_string(gold) << std::endl;
     std::cout << outSS.str();

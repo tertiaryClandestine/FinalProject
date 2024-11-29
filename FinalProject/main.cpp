@@ -8,17 +8,21 @@
 #include "GameSession.h"
 
 int DisplayMainMenu() {
-    std::cout << "-------DungeonMaster-------" << std::endl;
-    std::cout << "---------Main Menu---------" << std::endl;
+    std::cout << "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n";
+    std::cout << "╔═════════════════════════╗" << std::endl;
+    std::cout << "║──────DungeonMaster──────║" << std::endl;
+    std::cout << "║────────Main Menu────────║" << std::endl;
+    std::cout << "╠═════════════════════════╣" << std::endl;
 //    if (!std::filesystem::is_empty("savedata")){
 //        std::cout << "0. Continue" << std::endl;
 //    }
     int selection;
 
-    std::cout << "1. New" << std::endl;
-    std::cout << "2. Load" << std::endl;
-    std::cout << "3. Delete" << std::endl;
-    std::cout << "4. Quit" << std::endl;
+    std::cout << "║     ─══─ 1. New  ─══─   ║" << std::endl;
+    std::cout << "║     ─══─ 2. Load ─══─   ║" << std::endl;
+//    std::cout << "║--      3. Delete     -║" << std::endl;
+    std::cout << "║     ─══─ 3. Quit ─══─   ║" << std::endl;
+    std::cout << "╚═════════════════════════╝" << std::endl;
     std::cout << "Select from the above options by numerical entry:";
     std::cin >> selection;
     
@@ -27,9 +31,9 @@ int DisplayMainMenu() {
 int main(int argc, const char * argv[]) {
     
     GameSession gs;
-    char inputSelection = ' ';
+    int inputSelection = 0;
     
-    while (inputSelection != 4) {
+    while (inputSelection != 3) {
         inputSelection = DisplayMainMenu();
         switch (inputSelection) {
             case 1:
@@ -37,10 +41,16 @@ int main(int argc, const char * argv[]) {
                 gs.Play();
                 break;
             case 2:
-//                gs.Load(<#int#>)
+                inputSelection = gs.DisplaySlots();
+                if (inputSelection != -1){
+                    gs.Load(inputSelection);
+                    gs.Play();
+                    gs.Save(inputSelection);
+                }
+                inputSelection = 2;
                 break;
-            case 3:
-                break;
+//            case 3:
+//                break;
                 
             default:
                 break;

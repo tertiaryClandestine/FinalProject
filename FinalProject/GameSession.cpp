@@ -24,6 +24,7 @@ GameSession::GameSession(){
     
     map = nullptr;
     player = nullptr;
+    saveSlot = 1;
     
 }
 void GameSession::New(std::string filePath){
@@ -37,7 +38,8 @@ void GameSession::New(std::string filePath){
         std::cout << "Error Message: " << e.getMessage() << std::endl;
     }
     player = new Player(map, 48, 1);
-    Save(0);
+    std::cout << "Select the save slot (between 1 and 5) for this new game: ";
+    std::cin >> saveSlot;
 }
 void GameSession::Save(int slotID){
     if (map == nullptr || player == nullptr){
@@ -63,11 +65,13 @@ void GameSession::Load(int slotID){
     delete player;
     map = nullptr;
     player = nullptr;
+    saveSlot = slotID;
     
 //    map = new Map(
     std::string slotDir = PATH_SAVEDATA + "/" + std::to_string(slotID);
     if (!SlotExists(slotID)) {
-        std::filesystem::create_directory(slotDir);
+//        throw /
+//        std::filesystem::create_directory(slotDir);
     }
     try {
         map = new Map(slotDir + "/map.txt");
@@ -111,7 +115,45 @@ void GameSession::Play(){
                 player->Move(0, -1);
                 break;
             default:
+                Save(saveSlot);
                 break;
         }
     }
+}
+int GameSession::DisplaySlots(){
+//    std::stringstream outSS;
+    namespace fs = std::filesystem;
+    const fs::path savedata{PATH_SAVEDATA};
+    
+    Player* tmpPlayer;
+    int selection = 0;
+    std::cout << "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n";
+//    while (selection != -1) {
+        for (int i = 1; i < 6; ++i){
+            if (SlotExists(i)) {
+                tmpPlayer = new Player(PATH_SAVEDATA + "/" + std::to_string(i) + "/player.txt");
+                std::cout << "SlotID: " << i << std::endl;
+                tmpPlayer->Status();
+                delete tmpPlayer;
+                tmpPlayer = nullptr;
+                std::cout << "------------------------" << std::endl;
+            } else {
+                if (i == 1){
+                    std::cout << "No save slots" << std::endl;
+                    break;
+                }
+            }
+            
+        }
+        std::cout << "Pick the slot to load by the SlotID (-1 goes back to prior menu): ";
+        std::cin >> selection;
+//    }
+    
+//    int selection = 0;
+
+    return selection;
+    
+//    for (const auto& entry : fs::directory_iterator(savedata)) {
+        
+//    }
 }

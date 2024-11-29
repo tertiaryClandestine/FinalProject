@@ -1,6 +1,7 @@
 #pragma once
 #include "Map.h"
 #include "Treasure.h"
+#include <iomanip>
 //#include "Tile.h"
 
 class PlayerFileReadError{
@@ -15,14 +16,17 @@ private:
     Map* gameMap;
     Tile* playerLoc;
     Treasure* inventory[50];
+    int inventoryCount;
     int health;
     int gold;
     double attackPower;
     void Load(std::string);
+    void Combat();
 public:
 //    Player();
     Player(Map* _map, int, int);
     Player(Map*, std::string);
+    Player(std::string);
     
     Player();
     Tile* GetLoc();
@@ -30,6 +34,4 @@ public:
     void Move(int, int);
     void Status();
     void Save(std::string);
-    
-    
 };

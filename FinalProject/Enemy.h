@@ -12,6 +12,6 @@ public:
         attackPower = _attackPower;
     }
     virtual void attack() const = 0;
-    virtual int getHipoints();
-    virtual int getAttackPower();
+    int getHipoints();
+    int getAttackPower();
 };
