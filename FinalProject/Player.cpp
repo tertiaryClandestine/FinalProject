@@ -28,11 +28,8 @@ void Player::Move(int deltaX, int deltaY){
         playerLoc->setPlayerTile();
     }
     if (nextTile->getType() == "Enemy") {
-        Combat();
+//        Combat();
     }
-}
-void Player::Combat(){
-    
 }
 void Player::Save(std::string filePath){
     std::ofstream outputFile(filePath);

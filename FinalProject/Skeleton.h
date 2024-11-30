@@ -4,5 +4,5 @@ class Skeleton : public Enemy {
 private:
     
 public:
-    
+    void Attack(Player*);
 };

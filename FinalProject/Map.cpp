@@ -53,11 +53,14 @@ void Map::Save(std::string filePath){
     int row = 0;
     int col = 0;
     
+    Tile* playerTile = nullptr;
+    
     if(!outputFile.is_open())
         throw MapFileReadError("unable to create file: " + filePath);
     for (row = 0; row < 50; ++row){
         for (col = 0; col < 50; ++col) {
             if (tiles[row][col]->getSymbol() == '!'){
+                playerTile = tiles[row][col];
                 tiles[row][col]->setPlayerTile();
             }
             outSS << tiles[row][col]->getSymbol();
@@ -66,6 +69,7 @@ void Map::Save(std::string filePath){
     }
     outputFile << outSS.str();
     outputFile.close();
+    playerTile->setPlayerTile();
     
 }
 void Map::Draw(Tile* tile) {

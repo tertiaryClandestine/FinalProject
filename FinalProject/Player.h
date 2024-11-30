@@ -2,6 +2,7 @@
 #include "Map.h"
 #include "Treasure.h"
 #include <iomanip>
+#include "Enemy.h"
 //#include "Tile.h"
 
 class PlayerFileReadError{
@@ -21,12 +22,12 @@ private:
     int gold;
     double attackPower;
     void Load(std::string);
-    void Combat();
 public:
 //    Player();
     Player(Map* _map, int, int);
     Player(Map*, std::string);
     Player(std::string);
+    void Attack(Enemy*);
     
     Player();
     Tile* GetLoc();
