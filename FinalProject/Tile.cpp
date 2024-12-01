@@ -101,7 +101,7 @@ bool Tile::operator==( Tile& rhs){
     }
 }
 void Tile::clearTile(){
-    if (symbol == 't' || symbol == 'x'){
+    if (symbol == 't' || symbol == 'x'/* || symbol == 'l'*/){
         setType(' ');
         setSymbol(' ');
     }

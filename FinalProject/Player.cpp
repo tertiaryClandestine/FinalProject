@@ -205,3 +205,6 @@ void Player::PickupLoot(Treasure loot){
 void Player::SetAttackPower(double _attackPower) {
     attackPower = _attackPower;
 }
+int Player::GetGold(){
+    return gold;
+}

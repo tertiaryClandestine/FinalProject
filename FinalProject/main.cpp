@@ -40,6 +40,11 @@ int main(int argc, const char * argv[]) {
         switch (inputSelection) {
             case 1:
                 gs.New();
+                utils::PrintTextWithDelay("Starting new game... \r\n", 30);
+                utils::PrintTextWithDelay("Traverse the dungeon, defeating enemies and collecting treasure... \r\n", 30);
+                utils::PrintTextWithDelay("Collect 10,000 gold worth of treasure to win while fighting monsters and staying alive... \r\n", 30);
+                utils::PrintTextWithDelay("Good luck!\r\n", 30);
+                utils::PromptUserToContinue();
                 gs.Play();
                 break;
             case 2:

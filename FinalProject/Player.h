@@ -40,6 +40,7 @@ public:
     void SetAttackPower(double);
 //    int GetGold();
     void PickupLoot(Treasure);
+    int GetGold();
     
     Player();
     Tile* GetLoc();

@@ -97,7 +97,11 @@ void GameSession::Play(){
     Tile* prior;
     Tile* current;
     std::string line;
-    while (true) {
+    while (true && player->GetHealth() > 0) {
+        if (player->GetGold() >= 10000) {
+            utils::PrintTextWithDelay("Congratulations! You've achieved the gold amount needed to clear this dungeon. \r\nYou can continue playing for more gold, or save and exit.\r\n", 60);
+            utils::PromptUserToContinue();
+        }
         std::cout << "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n";
         map->Draw(player->GetLoc());
         
@@ -135,8 +139,6 @@ void GameSession::Play(){
         current = player->GetLoc();
         if (current != prior) {
             current->setPlayerTile();
-            
-//            std::cout << "rndVal" << rndVal;
             Treasure* loot = nullptr;
             switch (current->getSymbol()) {
                 case 'v':
@@ -144,31 +146,43 @@ void GameSession::Play(){
                 case 't':
                     if (utils::RandVal() < current->getEnemyChance() * 100) {
                         Combat();
+                        if (player->GetHealth() == 0) {
+                            utils::PrintTextWithDelay("Your HP reached 0. Game over... \r\n", 30);
+                            utils::PromptUserToContinue();
+                            return;
+                        }
                     }
                     break;
                 case 'x':
                     loot = new Treasure();
                     if (loot != nullptr){
                         utils::PrintTextWithDelay("Treasure discovered!\r\n", 30);
-//                        utils::PromptUserToContinue();
-                        //                        utils::PrintTextWithDelay(NPCs.at(0)->GetType() + " dropped the following loot: \r\n", 30);
-                        //                        monsterLoot->print();
                         loot->print();
-                        //                        player->PickupLoot(*monsterLoot);
                         player->PickupLoot(*loot);
                         delete loot;
                         loot = nullptr;
                         current->clearTile();
                         utils::PromptUserToContinue();
-                        
                     }
+                    break;
+                case 'l':
+                    utils::PrintTextWithDelay("You step into lava, sustaining 10 damage\r\n", 30);
+                    player->TakeDamage(10);
+                    if (player->GetHealth() == 0){
+                        utils::PrintTextWithDelay("Your HP reached 0. Game over... \r\n", 30);
+                        utils::PromptUserToContinue();
+                        return;
+                    }
+                    utils::PrintTextWithDelay("Your new HP is now: ", 30);
+                    utils::PrintTextWithDelay(std::to_string(player->GetHealth()) + "\r\n", 30);
+                    current->clearTile();
+                    utils::PromptUserToContinue();
                     break;
                 default:
                     break;
             }
             current->setPlayerTile();
         }
-        
     }
 }
 int GameSession::DisplaySlots(){
@@ -225,7 +239,6 @@ void GameSession::Combat(){
     utils::PromptUserToContinue();
     
     int turnCounter = 0;
-//    int inputSelection = 0;
     char inputSelection = ' ';
     std::string inputLine;
     do {
@@ -260,6 +273,9 @@ void GameSession::Combat(){
                 utils::PrintTextWithDelay(std::to_string(0), 30);
             }
             utils::PrintTextWithDelay(" damage.\r\n", 30);
+            if (player->GetHealth() == 0) {
+                return;
+            }
         }
         
         if (NPCs.at(0)->GetHealth() == 0){
@@ -276,7 +292,7 @@ void GameSession::Combat(){
             break;
         }
         ++turnCounter;
-    } while (/*(turnCounter % 2 == 1 || utils::PromptUserToContinue()) && */player->GetHealth() > 0 && NPCs.at(0)->GetHealth() > 0 && inputSelection != '3');
+    } while (player->GetHealth() > 0 && NPCs.at(0)->GetHealth() > 0 && inputSelection != '3');
     delete NPCs.at(0);
     NPCs.at(0) = nullptr;
 }
