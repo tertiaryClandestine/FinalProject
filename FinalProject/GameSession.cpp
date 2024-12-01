@@ -125,7 +125,6 @@ void GameSession::Play(){
                 Save(saveSlot);
                 utils::PrintTextWithDelay(" Saved!\r\n", 45);
                 utils::PromptUserToContinue();
-                
                 break;
             default:
                 break;
@@ -138,12 +137,30 @@ void GameSession::Play(){
             current->setPlayerTile();
             
 //            std::cout << "rndVal" << rndVal;
+            Treasure* loot = nullptr;
             switch (current->getSymbol()) {
                 case 'v':
                 case 'w':
                 case 't':
                     if (utils::RandVal() < current->getEnemyChance() * 100) {
                         Combat();
+                    }
+                    break;
+                case 'x':
+                    loot = new Treasure();
+                    if (loot != nullptr){
+                        utils::PrintTextWithDelay("Treasure discovered!\r\n", 30);
+//                        utils::PromptUserToContinue();
+                        //                        utils::PrintTextWithDelay(NPCs.at(0)->GetType() + " dropped the following loot: \r\n", 30);
+                        //                        monsterLoot->print();
+                        loot->print();
+                        //                        player->PickupLoot(*monsterLoot);
+                        player->PickupLoot(*loot);
+                        delete loot;
+                        loot = nullptr;
+                        current->clearTile();
+                        utils::PromptUserToContinue();
+                        
                     }
                     break;
                 default:
@@ -208,23 +225,26 @@ void GameSession::Combat(){
     utils::PromptUserToContinue();
     
     int turnCounter = 0;
-    int inputSelection = 0;
+//    int inputSelection = 0;
+    char inputSelection = ' ';
+    std::string inputLine;
     do {
         if (turnCounter % 2 == 0){
             utils::PrintTextWithDelay("Your turn. Choose: 1. Attack, 2. Block, 3. Run away\r\n", 30);
-            inputSelection = 0;
-            while (inputSelection < 1 || inputSelection > 3) {
-                std::cin >> inputSelection;
+            inputSelection = ' ';
+            while (inputSelection != '1' && inputSelection != '2' && inputSelection != '3') {
+                std::cin >> inputLine;
+                inputSelection = inputLine.at(0);
                 switch (inputSelection) {
-                    case 1:
+                    case '1':
                         utils::PrintTextWithDelay("You attack the enemy, dealing ", 30);
                         utils::PrintTextWithDelay(std::to_string(player->Attack(NPCs.at(0))), 30);
                         utils::PrintTextWithDelay(" damage.\r\n", 30);
                         break;
-                    case 2:
+                    case '2':
                         utils::PrintTextWithDelay("You prepare a defensive stance... \r\n", 30);
                         break;
-                    case 3:
+                    case '3':
                         utils::PrintTextWithDelay("You run away successfully, returning to map... \r\n", 30);
                         utils::PromptUserToContinue();
                         break;
@@ -234,7 +254,7 @@ void GameSession::Combat(){
             }
         } else {
             utils::PrintTextWithDelay("The enemy attacks you, dealing ", 30);
-            if (inputSelection != 2) {
+            if (inputSelection != '2') {
                 utils::PrintTextWithDelay(std::to_string(NPCs.at(0)->Attack(player)), 30);
             } else {
                 utils::PrintTextWithDelay(std::to_string(0), 30);
@@ -256,7 +276,7 @@ void GameSession::Combat(){
             break;
         }
         ++turnCounter;
-    } while (/*(turnCounter % 2 == 1 || utils::PromptUserToContinue()) && */player->GetHealth() > 0 && NPCs.at(0)->GetHealth() > 0 && inputSelection != 3);
+    } while (/*(turnCounter % 2 == 1 || utils::PromptUserToContinue()) && */player->GetHealth() > 0 && NPCs.at(0)->GetHealth() > 0 && inputSelection != '3');
     delete NPCs.at(0);
     NPCs.at(0) = nullptr;
 }

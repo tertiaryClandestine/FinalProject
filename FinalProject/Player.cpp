@@ -182,12 +182,12 @@ void Player::PickupLoot(Treasure loot){
         utils::PrintTextWithDelay("Your new HP is " + std::to_string(GetHealth()) + "\r\n", 30);
         return;
     } else if (loot.getName() == "AP up (2)") {
-        utils::PrintTextWithDelay("Your AP increased by 2\r\n", 30);
+        utils::PrintTextWithDelay("Your AP is increased by 2\r\n", 30);
         SetAttackPower(GetAttackPower() + 2);
         utils::PrintTextWithDelay("Your AP is now: " + std::to_string(GetAttackPower()) + "\r\n", 30);
         return;
     } else if (loot.getName() == "AP up (1)") {
-        utils::PrintTextWithDelay("Your AP increased by 1\r\n", 30);
+        utils::PrintTextWithDelay("Your AP is increased by 1\r\n", 30);
         SetAttackPower(GetAttackPower() + 1);
         utils::PrintTextWithDelay("Your AP is now: " + std::to_string(GetAttackPower()) + "\r\n", 30);
         return;
@@ -195,7 +195,11 @@ void Player::PickupLoot(Treasure loot){
     if (inventoryCount < 50) {
         inventory[inventoryCount] = loot;
         ++inventoryCount;
+        utils::PrintTextWithDelay("Your gold increases by ", 30);
+        utils::PrintTextWithDelay(std::to_string(loot.getGoldVal()), 30);
+        utils::PrintTextWithDelay(" for a new total gold of ", 30);
         gold += loot.getGoldVal();
+        utils::PrintTextWithDelay(std::to_string(gold) + "\r\n", 30);
     }
 }
 void Player::SetAttackPower(double _attackPower) {
