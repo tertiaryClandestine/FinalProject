@@ -2,11 +2,11 @@
 #include "Enemy.h"
 //#include "Utils.h"
 
-class Skeleton : public Enemy {
+class Dragon : public Enemy {
 private:
     
 public:
-    Skeleton(int = 10, double = 2.0, double = 1);
+    Dragon(int = 15, double = 7.0, double = 1);
     std::string GetType();
-    ~Skeleton();
+    ~Dragon();
 };

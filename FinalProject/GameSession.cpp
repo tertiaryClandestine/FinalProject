@@ -1,7 +1,8 @@
-//#pragma once
+#pragma once
 #include "GameSession.h"
 #include <filesystem>
 #include "Skeleton.h"
+#include "Dragon.h"
 #include <cstdlib>
 #include <ctime>
 #include <thread>
@@ -116,7 +117,7 @@ void GameSession::Play(){
                 player->Move(0, -1);
                 break;
             case 'x':
-                utils::PrintTextWithDelay("Saving", 60);
+                utils::PrintTextWithDelay("Saving", 30);
                 utils::PrintTextWithDelay("...", 500);
                 Save(saveSlot);
                 utils::PrintTextWithDelay(" Saved!\r\n", 45);
@@ -132,14 +133,16 @@ void GameSession::Play(){
         current = player->GetLoc();
         if (current != prior) {
             current->setPlayerTile();
+            
+//            std::cout << "rndVal" << rndVal;
             switch (current->getSymbol()) {
+                case 'v':
+                case 'w':
                 case 't':
-                    Combat();
-                    
-//                    player->GetLoc()->setType(' ');
-//                    player->GetLoc()->setSymbol(' ');
+                    if (utils::RandVal() < current->getEnemyChance() * 100) {
+                        Combat();
+                    }
                     break;
-                    
                 default:
                     break;
             }
@@ -177,43 +180,43 @@ int GameSession::DisplaySlots(){
 }
 void GameSession::Combat(){
     std::vector<Enemy*> NPCs;
-    std::srand(std::time(0));
+    
     int randomNum = std::rand() % 3;
     switch (randomNum) {
         case 0:
-            NPCs.push_back(new Skeleton(10, 3));
+            NPCs.push_back(new Dragon());
             break;
         case 1:
-            NPCs.push_back(new Skeleton(12, 2));
+            NPCs.push_back(new Skeleton());
             break;
         case 2:
             NPCs.push_back(new Skeleton(8, 4));
             break;
     }
     std::cout << "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n";
-    std::cout << "You encounter a skeleton with " << NPCs.at(0)->GetHealth() << " HP and " << NPCs.at(0) ->GetAttackPower() << " AP" << std::endl;
-    std::cout << "Your current status: " << player->Status();
+    std::cout << "You encounter a " << NPCs.at(0)->GetType() << " with " << NPCs.at(0)->GetHealth() << " HP and " << NPCs.at(0) ->GetAttackPower() << " AP" << std::endl;
+    std::cout << "Your current status: " << std::endl << player->Status() << std::endl;
     utils::PromptUserToContinue();
     
     int turnCounter = 0;
     int inputSelection = 0;
     do {
         if (turnCounter % 2 == 0){
-            utils::PrintTextWithDelay("Your turn. Choose: 1. Attack, 2. Block, 3. Run away\r\n", 60);
+            utils::PrintTextWithDelay("Your turn. Choose: 1. Attack, 2. Block, 3. Run away\r\n", 30);
             inputSelection = 0;
             while (inputSelection < 1 || inputSelection > 3) {
                 std::cin >> inputSelection;
                 switch (inputSelection) {
                     case 1:
-                        utils::PrintTextWithDelay("You attack the enemy, dealing ", 60);
-                        utils::PrintTextWithDelay(std::to_string(player->Attack(NPCs.at(0))), 60);
-                        utils::PrintTextWithDelay(" damage.\r\n", 60);
+                        utils::PrintTextWithDelay("You attack the enemy, dealing ", 30);
+                        utils::PrintTextWithDelay(std::to_string(player->Attack(NPCs.at(0))), 30);
+                        utils::PrintTextWithDelay(" damage.\r\n", 30);
                         break;
                     case 2:
-                        utils::PrintTextWithDelay("You prepare a defensive stance... \r\n", 60);
+                        utils::PrintTextWithDelay("You prepare a defensive stance... \r\n", 30);
                         break;
                     case 3:
-                        utils::PrintTextWithDelay("You run away successfully, returning to map... \r\n", 60);
+                        utils::PrintTextWithDelay("You run away successfully, returning to map... \r\n", 30);
                         utils::PromptUserToContinue();
                         break;
                     default:
@@ -221,17 +224,24 @@ void GameSession::Combat(){
                 }
             }
         } else {
-            utils::PrintTextWithDelay("The enemy attacks you, dealing ", 60);
+            utils::PrintTextWithDelay("The enemy attacks you, dealing ", 30);
             if (inputSelection != 2) {
-                utils::PrintTextWithDelay(std::to_string(NPCs.at(0)->Attack(player)),60);
+                utils::PrintTextWithDelay(std::to_string(NPCs.at(0)->Attack(player)), 30);
             } else {
-                utils::PrintTextWithDelay(std::to_string(0), 60);
+                utils::PrintTextWithDelay(std::to_string(0), 30);
             }
-            utils::PrintTextWithDelay(" damage.\r\n", 60);
+            utils::PrintTextWithDelay(" damage.\r\n", 30);
         }
         
         if (NPCs.at(0)->GetHealth() == 0){
-            utils::PrintTextWithDelay("Enemy defeated, returning to map... \r\n", 60);
+            Treasure* monsterLoot = NPCs.at(0)->Loot();
+            utils::PrintTextWithDelay("Enemy defeated, ", 30);
+            if (monsterLoot != nullptr){
+                utils::PrintTextWithDelay(NPCs.at(0)->GetType() + " dropped the following loot: \r\n", 30);
+                monsterLoot->print();
+                player->PickupLoot(*monsterLoot);
+            }
+            utils::PrintTextWithDelay("returning to map... \r\n", 30);
             utils::PromptUserToContinue();
             player->GetLoc()->clearTile();
             break;

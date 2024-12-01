@@ -21,7 +21,7 @@ class Player {
 private:
     Map* gameMap;
     Tile* playerLoc;
-    Treasure* inventory[50];
+    Treasure inventory[50];
     int inventoryCount;
     int health;
     int gold;
@@ -37,6 +37,8 @@ public:
     int TakeDamage(int);
     int GetHealth();
     int GetAttackPower();
+//    int GetGold();
+    void PickupLoot(Treasure);
     
     Player();
     Tile* GetLoc();

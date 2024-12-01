@@ -9,6 +9,7 @@
 #include <ctime>
 #include <thread>
 #include <filesystem>
+#include <iostream>
 
 namespace utils {
     inline void PrintTextWithDelay(std::string input, int ms) {
@@ -33,5 +34,8 @@ namespace utils {
     inline bool FSO_Exists(const std::filesystem::path& p, std::filesystem::file_status s = std::filesystem::file_status{})
     {
         return std::filesystem::status_known(s) ? std::filesystem::exists(s) : std::filesystem::exists(p);
+    }
+    inline double RandVal(){
+        return static_cast<double>(std::rand() % 100);
     }
 }

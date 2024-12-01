@@ -2,15 +2,16 @@
 #include "Tile.h"
     /*
     x = Treasure
-    v = Grass -- 25% chance of enemy
-    w = Tall grass -- 40% chance of enemy
+    v = Grass -- 5% chance of enemy
+    w = Tall grass -- 8% chance of enemy
     @ = Wall
     t = Enemy
     l = Lava
     ! = Player spawn
-      = Empty space -- 5% chance of enemy
+      = Empty space -- 1% chance of enemy
     */
 Tile::Tile(const char& c, int _x, int _y) {
+    enemyChance = 0;
     setSymbol(c);
     setType(c);
     x = _x;
@@ -39,34 +40,38 @@ void Tile::setSymbol(const char& c = ' '){
 }
 void Tile::setType(const char& c = ' '){
     switch (c){
-    case 'x':
-        type = "Treasure";
-        setFormatting("\033[8;103m");
-        break;
-    case 'v':
-        type = "Grass";
-        setFormatting("\033[8;102m");
-        break;
-    case 'w':
-        type = "Tall grass";
-        setFormatting("\033[8;106m");
-        break;
-    case '@':
-        type = "Wall";
-        setFormatting("\033[8;7m");
-        break;
-    case 't':
-        type = "Enemy";
-        setFormatting("\033[8;41m");
-        break;
-    case 'l':
-        type = "Lava";
-        setFormatting("\033[8;105m");
-        break;
-    case ' ':
-        type = "Empty space";
-        setFormatting("\033[8;0m");
-        break;
+        case 'x':
+            type = "Treasure";
+            setFormatting("\033[8;103m");
+            break;
+        case 'v':
+            type = "Grass";
+            setFormatting("\033[8;102m");
+            enemyChance = 0.05;
+            break;
+        case 'w':
+            type = "Tall grass";
+            setFormatting("\033[8;106m");
+            enemyChance = 0.08;
+            break;
+        case '@':
+            type = "Wall";
+            setFormatting("\033[8;7m");
+            break;
+        case 't':
+            type = "Enemy";
+            setFormatting("\033[8;41m");
+            enemyChance = 1;
+            break;
+        case 'l':
+            type = "Lava";
+            setFormatting("\033[8;105m");
+            break;
+        case ' ':
+            type = "Empty space";
+            setFormatting("\033[8;0m");
+            enemyChance = 0.01;
+            break;
 //    case '!':
 //        type = "Player";
 //        setFormatting("\033[7m");
@@ -96,6 +101,11 @@ bool Tile::operator==( Tile& rhs){
     }
 }
 void Tile::clearTile(){
-    setType(' ');
-    setSymbol(' ');
+    if (symbol == 't' || symbol == 'x'){
+        setType(' ');
+        setSymbol(' ');
+    }
+}
+double Tile::getEnemyChance() {
+    return enemyChance;
 }

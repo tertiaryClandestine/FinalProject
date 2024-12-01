@@ -31,6 +31,7 @@ int DisplayMainMenu() {
 }
 int main(int argc, const char * argv[]) {
     
+    std::srand(std::time(0));
     GameSession gs;
     int inputSelection = 0;
     

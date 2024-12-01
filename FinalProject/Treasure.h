@@ -12,5 +12,6 @@ public:
     int getGoldVal();
     std::string getName();
     std::string getDescription();
+    void print();
 };
 

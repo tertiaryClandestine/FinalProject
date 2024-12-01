@@ -30,7 +30,6 @@ public:
     Map* GetMap();
     void Play();
     void Combat();
+//    void Treasure();
     int DisplaySlots();
-//    bool PromptUserToContinue();
-//    void PrintTextWithDelay(std::string, int);
 };

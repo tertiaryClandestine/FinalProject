@@ -9,6 +9,9 @@ Player::Player(Map* _map, int _x, int _y){
     gold = 0;
     attackPower = 5;
     inventoryCount = 0;
+//    for (int i = 0; i < 50; ++i) {
+//        inventory[i] = nullptr;
+//    }
 }
 Player::Player(Map* _map, std::string filePath) {
     gameMap = _map;
@@ -46,9 +49,9 @@ void Player::Save(std::string filePath){
     
     for (int i = 0; i < inventoryCount; ++i) {
         outSS << std::to_string(i) << "\t";
-        outSS << inventory[i]->getGoldVal() << "\t";
-        outSS << inventory[i]->getName() << "\t";
-        outSS << inventory[i]->getDescription() << std::endl;
+        outSS << inventory[i].getGoldVal() << "\t";
+        outSS << inventory[i].getName() << "\t";
+        outSS << inventory[i].getDescription() << std::endl;
     }
     
     outputFile << outSS.str();
@@ -110,7 +113,7 @@ void Player::Load(std::string filePath){
                 inSS.ignore();
                 getline(inSS, _treasureDescription);
 //                inSS >> std::noskipws >> _treasureDescription >> std:: skipws;
-                inventory[_treasureIdx] = new Treasure(_treasureGoldVal, _treasureName, _treasureDescription);
+                inventory[_treasureIdx] = Treasure(_treasureGoldVal, _treasureName, _treasureDescription);
                 ++i;
                 break;
         }
@@ -159,4 +162,11 @@ int Player::GetAttackPower(){
 }
 void Player::SetHealth(int _health){
     health = _health;
+}
+void Player::PickupLoot(Treasure loot){
+    if (inventoryCount < 50) {
+        inventory[inventoryCount] = loot;
+        ++inventoryCount;
+        gold += loot.getGoldVal();
+    }
 }

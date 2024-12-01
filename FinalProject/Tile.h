@@ -21,7 +21,7 @@ private:
     bool isPlayerTile;
     bool treasure;
     int treasureVal;
-    int enemyChance; //value is
+    double enemyChance;
     int x;
     int y;
     void setType(const char&);
@@ -41,6 +41,7 @@ public:
     std::string getFormatting();
     void setPlayerTile();
     std::string getType();
+    double getEnemyChance();
     ~Tile();
     
 };
