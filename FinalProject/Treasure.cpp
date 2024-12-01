@@ -10,35 +10,43 @@ Treasure::Treasure(){
     if (rndVal < 2) {
         goldVal = 5000;
         name = "Onyx";
-        description = "Shiny, but black!";
+        description = "Shiny black gemstone";
     } else if (rndVal < 3) {
         goldVal = 0;
         name = "Health Potion (50)";
         description = "Restores 50 HP";
-    } else if (rndVal < 10) {
-        goldVal = 2500;
-        name = "Diamond";
-        description = "Shiny!";
-    } else if (rndVal < 20){
-        goldVal = 2000;
-        name = "Ruby";
-        description = "Shiny, but red!";
-    } else if (rndVal < 30) {
-        goldVal = 1500;
-        name = "Emerald";
-        description = "Shiny, but green!";
+    } else if (rndVal < 5) {
+        goldVal = 0;
+        name = "AP up (2)";
+        description = "Increases attack power by 2";
+    } else if (rndVal < 7) {
+        goldVal = 0;
+        name = "AP up (1)";
+        description = "Increases attack power by 1";
+//    } else if (rndVal < 10) {
+//        goldVal = 2500;
+//        name = "Diamond";
+//        description = "Shiny clear gemstone";
+//    } else if (rndVal < 20){
+//        goldVal = 2000;
+//        name = "Ruby";
+//        description = "Shiny red gemstone";
+//    } else if (rndVal < 30) {
+//        goldVal = 1500;
+//        name = "Emerald";
+//        description = "Shiny green gemstone";
     } else if (rndVal < 50) {
-        goldVal = 1000;
-        name = "Sapphire";
-        description = "Shiny, but blue!";
-    } else if (rndVal < 70) {
         goldVal = 0;
         name = "Health Potion (10)";
         description = "Restores 10 HP";
+    } else if (rndVal < 70) {
+        goldVal = 1000;
+        name = "Sapphire";
+        description = "Shiny blue gemstone";
     } else {
-        goldVal = 0;
-        name = "Junk";
-        description = "Who wants this anyway?";
+        goldVal = 500;
+        name = "Opal";
+        description = "Shiny multicolored gemstone";
     }
 }
 

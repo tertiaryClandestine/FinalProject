@@ -37,6 +37,7 @@ public:
     int TakeDamage(int);
     int GetHealth();
     int GetAttackPower();
+    void SetAttackPower(double);
 //    int GetGold();
     void PickupLoot(Treasure);
     

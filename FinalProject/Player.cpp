@@ -161,12 +161,43 @@ int Player::GetAttackPower(){
     return (int)AP;
 }
 void Player::SetHealth(int _health){
-    health = _health;
+    if (_health > 100) {
+        health = 100;
+    } else if (_health < 0) {
+        health = 0;
+    } else {
+        health = _health;
+    }
+    
 }
 void Player::PickupLoot(Treasure loot){
+    if (loot.getName() == "Health Potion (50)") {
+        utils::PrintTextWithDelay("You drink the potion, restoring up to 50 HP\r\n", 30);
+        SetHealth(GetHealth() + 50);
+        utils::PrintTextWithDelay("Your new HP is " + std::to_string(GetHealth()) + "\r\n", 30);
+        return;
+    } else if (loot.getName() == "Health Potion (10)") {
+        utils::PrintTextWithDelay("You drink the potion, restoring up to 10 HP\r\n", 30);
+        SetHealth(GetHealth() + 10);
+        utils::PrintTextWithDelay("Your new HP is " + std::to_string(GetHealth()) + "\r\n", 30);
+        return;
+    } else if (loot.getName() == "AP up (2)") {
+        utils::PrintTextWithDelay("Your AP increased by 2\r\n", 30);
+        SetAttackPower(GetAttackPower() + 2);
+        utils::PrintTextWithDelay("Your AP is now: " + std::to_string(GetAttackPower()) + "\r\n", 30);
+        return;
+    } else if (loot.getName() == "AP up (1)") {
+        utils::PrintTextWithDelay("Your AP increased by 1\r\n", 30);
+        SetAttackPower(GetAttackPower() + 1);
+        utils::PrintTextWithDelay("Your AP is now: " + std::to_string(GetAttackPower()) + "\r\n", 30);
+        return;
+    }
     if (inventoryCount < 50) {
         inventory[inventoryCount] = loot;
         ++inventoryCount;
         gold += loot.getGoldVal();
     }
+}
+void Player::SetAttackPower(double _attackPower) {
+    attackPower = _attackPower;
 }

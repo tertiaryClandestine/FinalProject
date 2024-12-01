@@ -1,13 +1,16 @@
 #pragma once
 #include "GameSession.h"
 #include <filesystem>
-#include "Skeleton.h"
-#include "Dragon.h"
 #include <cstdlib>
 #include <ctime>
 #include <thread>
 #include "Utils.h"
-
+#include "Skeleton.h"
+#include "Dragon.h"
+#include "Goblin.h"
+#include "Zombie.h"
+#include "Spider.h"
+ 
 const std::string PATH_SAVEDATA = "savedata";
 
 bool GameSession::SlotExists(int slotID){
@@ -181,7 +184,7 @@ int GameSession::DisplaySlots(){
 void GameSession::Combat(){
     std::vector<Enemy*> NPCs;
     
-    int randomNum = std::rand() % 3;
+    int randomNum = std::rand() % 5;
     switch (randomNum) {
         case 0:
             NPCs.push_back(new Dragon());
@@ -190,7 +193,13 @@ void GameSession::Combat(){
             NPCs.push_back(new Skeleton());
             break;
         case 2:
-            NPCs.push_back(new Skeleton(8, 4));
+            NPCs.push_back(new Goblin());
+            break;
+        case 3:
+            NPCs.push_back(new Spider());
+            break;
+        case 4:
+            NPCs.push_back(new Zombie());
             break;
     }
     std::cout << "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n";

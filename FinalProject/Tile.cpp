@@ -47,12 +47,12 @@ void Tile::setType(const char& c = ' '){
         case 'v':
             type = "Grass";
             setFormatting("\033[8;102m");
-            enemyChance = 0.05;
+            enemyChance = 0.07;
             break;
         case 'w':
             type = "Tall grass";
             setFormatting("\033[8;106m");
-            enemyChance = 0.08;
+            enemyChance = 0.10;
             break;
         case '@':
             type = "Wall";
@@ -70,7 +70,7 @@ void Tile::setType(const char& c = ' '){
         case ' ':
             type = "Empty space";
             setFormatting("\033[8;0m");
-            enemyChance = 0.01;
+            enemyChance = 0.03;
             break;
 //    case '!':
 //        type = "Player";
