@@ -1,3 +1,4 @@
+//#pragma once
 #include "Treasure.h"
 
 Treasure::Treasure(){

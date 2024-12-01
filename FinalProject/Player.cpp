@@ -1,5 +1,6 @@
 //#pragma once
 #include "Player.h"
+#include "Enemy.h"
 Player::Player(Map* _map, int _x, int _y){
     gameMap = _map;
     playerLoc = gameMap->getTile(_x, _y);
@@ -141,3 +142,28 @@ void Player::Status(){
 //    gold = 0;
 //    attackPower = 5;
 //}
+int Player::TakeDamage(int damage){
+    int newHealth = GetHealth() - damage >= 0 ? GetHealth() - damage: 0;
+    int damageSustained = GetHealth() - newHealth;
+    SetHealth(newHealth);
+    return damageSustained;
+    //    health -= damage;
+//    utils::PrintTextWithDelay("You are attacked and sustain " + std::to_string(damage) + " damage.\r\n", 60);
+    
+//    std::cout << "You sustain " << damage << " damage. Your new health is " << health << " /100" << std::endl;
+}
+int Player::Attack(Enemy* enemy){
+//    std::cout << "player attack" << std::endl;
+    return enemy->TakeDamage(GetAttackPower());
+}
+int Player::GetHealth(){
+    return health;
+}
+int Player::GetAttackPower(){
+    double AP = attackPower;
+    AP = AP + 0.5 - (AP < 0);
+    return (int)AP;
+}
+void Player::SetHealth(int _health){
+    health = _health;
+}

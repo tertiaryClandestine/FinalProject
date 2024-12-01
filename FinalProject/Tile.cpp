@@ -88,5 +88,11 @@ void Tile::setPlayerTile(){
 std::string Tile::getType(){
     return type;
 }
-
+bool Tile::operator==( Tile& rhs){
+    if (this->getX() == rhs.getX() && this->getY() == rhs.getY()) {
+        return true;
+    } else {
+        return false;
+    }
+}
 

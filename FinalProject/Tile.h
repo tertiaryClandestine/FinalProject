@@ -28,10 +28,12 @@ private:
     void setType(const char&);
     void setFormatting(std::string);
     
+    
     // Treasure treasure;
     
 public:
     Tile(const char&, int, int);
+    bool operator==(Tile&);
     char getSymbol();
     int getX();
     int getY();

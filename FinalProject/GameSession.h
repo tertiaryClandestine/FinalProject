@@ -1,5 +1,7 @@
+#pragma once
 #include "Map.h"
 #include "Player.h"
+
 
 class InvalidSaveState{
 private:
@@ -27,5 +29,8 @@ public:
     Player* GetPlayer();
     Map* GetMap();
     void Play();
+    void Combat();
     int DisplaySlots();
+//    bool PromptUserToContinue();
+//    void PrintTextWithDelay(std::string, int);
 };

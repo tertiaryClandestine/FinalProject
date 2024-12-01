@@ -1,8 +1,13 @@
+#pragma once
 #include "Enemy.h"
+//#include "Utils.h"
 
 class Skeleton : public Enemy {
 private:
     
 public:
-    void Attack(Player*);
+    Skeleton(int, double);
+    int Attack(Player*);
+    int TakeDamage(int);
+    ~Skeleton();
 };

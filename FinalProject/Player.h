@@ -2,8 +2,11 @@
 #include "Map.h"
 #include "Treasure.h"
 #include <iomanip>
-#include "Enemy.h"
+#include "Utils.h"
+//#include "Enemy.h"
 //#include "Tile.h"
+
+
 
 class PlayerFileReadError{
 private:
@@ -12,6 +15,8 @@ public:
     PlayerFileReadError(std::string m):message(m) {}
     std::string getMessage() { return message; }
 };
+
+class Enemy;
 class Player {
 private:
     Map* gameMap;
@@ -22,12 +27,16 @@ private:
     int gold;
     double attackPower;
     void Load(std::string);
+    void SetHealth(int);
 public:
 //    Player();
     Player(Map* _map, int, int);
     Player(Map*, std::string);
     Player(std::string);
-    void Attack(Enemy*);
+    int Attack(Enemy*);
+    int TakeDamage(int);
+    int GetHealth();
+    int GetAttackPower();
     
     Player();
     Tile* GetLoc();
