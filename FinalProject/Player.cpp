@@ -1,6 +1,7 @@
 //#pragma once
 #include "Player.h"
 #include "Enemy.h"
+//When starting a new game, this constructor is used
 Player::Player(Map* _map, int _x, int _y){
     gameMap = _map;
     playerLoc = gameMap->getTile(_x, _y);
@@ -9,10 +10,8 @@ Player::Player(Map* _map, int _x, int _y){
     gold = 0;
     attackPower = 5;
     inventoryCount = 0;
-//    for (int i = 0; i < 50; ++i) {
-//        inventory[i] = nullptr;
-//    }
 }
+//when loading a game from file, this constructor is used
 Player::Player(Map* _map, std::string filePath) {
     gameMap = _map;
     Load(filePath);
@@ -21,9 +20,11 @@ Player::Player(std::string filePath) {
 //    gameMap = _map;
     Load(filePath);
 }
+//Return the current map location tile the player is at
 Tile* Player::GetLoc(){
     return playerLoc;
 }
+//Move the player to a new tile, unless that tile is a wall
 void Player::Move(int deltaX, int deltaY){
     Tile* nextTile = gameMap->getTile(playerLoc->getX() + deltaX, playerLoc->getY() + deltaY);
     if (nextTile->getType() != "Wall"){
@@ -31,10 +32,8 @@ void Player::Move(int deltaX, int deltaY){
         playerLoc = nextTile;
         playerLoc->setPlayerTile();
     }
-    if (nextTile->getType() == "Enemy") {
-//        Combat();
-    }
 }
+//Save the current state of player object to file
 void Player::Save(std::string filePath){
     std::ofstream outputFile(filePath);
     if(!outputFile.is_open())
@@ -58,6 +57,7 @@ void Player::Save(std::string filePath){
     outputFile.close();
     
 }
+//Load the player state from file
 void Player::Load(std::string filePath){
     std::ifstream inputFile(filePath);
     if(!inputFile.is_open())
@@ -143,13 +143,8 @@ int Player::TakeDamage(int damage){
     int damageSustained = GetHealth() - newHealth;
     SetHealth(newHealth);
     return damageSustained;
-    //    health -= damage;
-//    utils::PrintTextWithDelay("You are attacked and sustain " + std::to_string(damage) + " damage.\r\n", 60);
-    
-//    std::cout << "You sustain " << damage << " damage. Your new health is " << health << " /100" << std::endl;
 }
 int Player::Attack(Enemy* enemy){
-//    std::cout << "player attack" << std::endl;
     return enemy->TakeDamage(GetAttackPower());
 }
 int Player::GetHealth(){
@@ -170,6 +165,7 @@ void Player::SetHealth(int _health){
     }
     
 }
+//logic for picking up loot, or modifying player attributes accordingly
 void Player::PickupLoot(Treasure loot){
     if (loot.getName() == "Health Potion (50)") {
         utils::PrintTextWithDelay("You drink the potion, restoring up to 50 HP\r\n", 30);

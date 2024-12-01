@@ -16,7 +16,7 @@ Tile* Map::getTile(int x, int y){
     return tiles[x][y];
 }
 
-
+//Load mapfile into memory
 void Map::Load(std::string filePath){
     std::ifstream inputFile(filePath);
     std::string line;
@@ -46,6 +46,7 @@ void Map::Load(std::string filePath){
     inputFile.close();
 
 }
+//Save map state to memory
 void Map::Save(std::string filePath){
     std::ofstream outputFile(filePath);
 //    std::string line;
@@ -72,6 +73,7 @@ void Map::Save(std::string filePath){
     playerTile->setPlayerTile();
     
 }
+//Draw the map to screen based on the input tile (usually the player tile)
 void Map::Draw(Tile* tile) {
     int x = tile->getX();
     int y = tile->getY();

@@ -30,6 +30,5 @@ public:
     Map* GetMap();
     void Play();
     void Combat();
-//    void Treasure();
     int DisplaySlots();
 };

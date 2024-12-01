@@ -17,6 +17,7 @@ Tile::Tile(const char& c, int _x, int _y) {
     x = _x;
     y = _y;
 }
+//unique character used to derive the functionality of the tile
 char Tile::getSymbol() {
     char result;
     if (isPlayerTile) {
@@ -26,6 +27,7 @@ char Tile::getSymbol() {
     }
     return result;
 }
+//return tile-specific terminal formatting. For example, wall is black (inverted), while grass is green, and lava is pink
 std::string Tile::getFormatting(){
     std::string result;
     if (isPlayerTile) {
@@ -38,6 +40,7 @@ std::string Tile::getFormatting(){
 void Tile::setSymbol(const char& c = ' '){
     symbol = c;
 }
+//Setting the type of the tile, along with other attributes such as formatting and enemy chance
 void Tile::setType(const char& c = ' '){
     switch (c){
         case 'x':
@@ -100,6 +103,7 @@ bool Tile::operator==( Tile& rhs){
         return false;
     }
 }
+//if the player interacts with an enemy title, then we want to clear it after so that it is no longer considered an enemy tile for the remainder of the game session
 void Tile::clearTile(){
     if (symbol == 't' || symbol == 'x'/* || symbol == 'l'*/){
         setType(' ');

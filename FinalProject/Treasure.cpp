@@ -2,6 +2,7 @@
 #include "Treasure.h"
 #include "Utils.h"
 
+//default constructor describing the gold value of the treasure, the name, and the description
 Treasure::Treasure(){
 //    goldVal = 0;
 //    name = "";

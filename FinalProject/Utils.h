@@ -11,6 +11,12 @@
 #include <filesystem>
 #include <iostream>
 
+//A collection of utility functions to supplement other functionality
+//PrintTextWithDelay allows text to be shown to the user in a slower pace, creating a dramatic effect
+//PromptUserToContinue Allows for pauses so the user can read the screen
+//FSO_Exists helper function for checking if a folder or file exists
+//RandVal generates a random value from 0 to 99 for various randomization needs
+
 namespace utils {
     inline void PrintTextWithDelay(std::string input, int ms) {
         int stringLength = input.length();

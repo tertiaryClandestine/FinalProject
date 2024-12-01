@@ -13,6 +13,7 @@
  
 const std::string PATH_SAVEDATA = "savedata";
 
+//Need to check if the save data slot is already generated from a previous game session
 bool GameSession::SlotExists(int slotID){
     namespace fs = std::filesystem;
     std::string slotPath = PATH_SAVEDATA + "/" + std::to_string(slotID);
@@ -25,6 +26,7 @@ GameSession::GameSession(){
     namespace fs = std::filesystem;
     const fs::path savedata{PATH_SAVEDATA};
     
+    //Create the savedata directory since it's unlikely to have been already there
     fs::create_directory(savedata);
     
     map = nullptr;
@@ -32,6 +34,7 @@ GameSession::GameSession(){
     saveSlot = 1;
     
 }
+//Prompt the user for the slot they want to place their new game, and throw errors if the map file is unable to be read.
 void GameSession::New(std::string filePath){
     try {
         map = new Map(filePath);
@@ -46,6 +49,7 @@ void GameSession::New(std::string filePath){
     std::cout << "Select the save slot (between 1 and 5) for this new game: ";
     std::cin >> saveSlot;
 }
+//Save the gamesession by saving the player state and the map state seperately, but in the same slotID direcetory under savedata
 void GameSession::Save(int slotID){
     if (map == nullptr || player == nullptr){
         throw InvalidSaveState("No active gamesession available to save");
@@ -65,6 +69,7 @@ void GameSession::Save(int slotID){
         std::cout << "Error Message: " << e.getMessage() << std::endl;
     }
 }
+//Load the gamesession by loading the player state and map state seperately, but from the same slotID directory under savedata
 void GameSession::Load(int slotID){
     delete map;
     delete player;
@@ -92,12 +97,19 @@ Player* GameSession::GetPlayer(){
 Map* GameSession::GetMap(){
     return map;
 }
+//Main play session loop for game
+//A sigle charactor represents the movement up,down,left, or right
+//if the player->gold value >= 10000, they win
+//if the player->health value == 0 then game over
+//when prompting for the direction input, I was having issues where successive letters were being submitted at once
+//so I take the getline() of the input, then only look at the character at index 0 to determine the direction
+
 void GameSession::Play(){
     char directionInput = ' ';
     Tile* prior;
     Tile* current;
     std::string line;
-    while (true && player->GetHealth() > 0) {
+    while (player->GetHealth() > 0) {
         if (player->GetGold() >= 10000) {
             utils::PrintTextWithDelay("Congratulations! You've achieved the gold amount needed to clear this dungeon. \r\nYou can continue playing for more gold, or save and exit.\r\n", 60);
             utils::PromptUserToContinue();
@@ -136,6 +148,11 @@ void GameSession::Play(){
         if (directionInput == 'x') {
             break;
         }
+        //tile interaction logic
+        //if tile is grass, tall grass, or an enemy tile, roll the chance of enemy and determine if combat is initiated
+        //if player health reaches 0, then game over
+        //if tile is treasure, then add that loot to player inventory, otherwise modify player attributes accordingly
+        //if tile is lava, player takes damage
         current = player->GetLoc();
         if (current != prior) {
             current->setPlayerTile();
@@ -185,6 +202,7 @@ void GameSession::Play(){
         }
     }
 }
+//Display save slots to choose to load from
 int GameSession::DisplaySlots(){
     namespace fs = std::filesystem;
     const fs::path savedata{PATH_SAVEDATA};
@@ -212,6 +230,11 @@ int GameSession::DisplaySlots(){
     return selection;
 
 }
+//turn based combat
+//a random enemy is selected
+//player goes first, and can choose to attack, block the next enemy attack, or run away
+//if the enemy is defeated, loot is dropped and information about that loot is presented
+
 void GameSession::Combat(){
     std::vector<Enemy*> NPCs;
     

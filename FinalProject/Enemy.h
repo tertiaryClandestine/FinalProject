@@ -6,6 +6,9 @@
 #include "Utils.h"
 
 //class Player;
+/*
+ Base class for Dragon, Goblin, Skeleton, Spider, and Zombie enemies
+ */
 
 class Enemy {
 private:
@@ -27,6 +30,7 @@ public:
     
     int GetHealth() { return health; }
     
+    //When an enemy dies in GameSession.Combat, loot is generated based on the enemy's treasureChance value
     Treasure* Loot() {
         double rndVal = utils::RandVal();
         if (rndVal < treasureChance * 100) {
@@ -42,10 +46,12 @@ public:
         return (int)AP;
     }
     
+    //Return the damage value so the calling function can include it in its prompt to the user
     int Attack(Player* pl) {
         return pl->TakeDamage(GetAttackPower());
     }
     
+    //Inflict damage upto the amount remaining. Don't want negative health values ;)
     int TakeDamage(int damage) {
         int newHealth = GetHealth() - damage >= 0 ? GetHealth() - damage: 0;
         int result = GetHealth() - newHealth;
