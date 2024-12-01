@@ -96,8 +96,9 @@ void GameSession::Play(){
     while (true) {
         std::cout << "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n";
         map->Draw(player->GetLoc());
-        player->Status();
+        
         prior = player->GetLoc();
+        std::cout << player->Status();
         std::cout << "Movement options: a=left, w=up, s=down, d=right...x=exit" << std::endl;
         std::cin >> line;
         directionInput = line[0];
@@ -115,7 +116,12 @@ void GameSession::Play(){
                 player->Move(0, -1);
                 break;
             case 'x':
+                utils::PrintTextWithDelay("Saving", 60);
+                utils::PrintTextWithDelay("...", 500);
                 Save(saveSlot);
+                utils::PrintTextWithDelay(" Saved!\r\n", 45);
+                utils::PromptUserToContinue();
+                
                 break;
             default:
                 break;
@@ -129,6 +135,9 @@ void GameSession::Play(){
             switch (current->getSymbol()) {
                 case 't':
                     Combat();
+                    
+//                    player->GetLoc()->setType(' ');
+//                    player->GetLoc()->setSymbol(' ');
                     break;
                     
                 default:
@@ -181,14 +190,16 @@ void GameSession::Combat(){
             NPCs.push_back(new Skeleton(8, 4));
             break;
     }
+    std::cout << "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n";
     std::cout << "You encounter a skeleton with " << NPCs.at(0)->GetHealth() << " HP and " << NPCs.at(0) ->GetAttackPower() << " AP" << std::endl;
+    std::cout << "Your current status: " << player->Status();
     utils::PromptUserToContinue();
     
     int turnCounter = 0;
     int inputSelection = 0;
     do {
         if (turnCounter % 2 == 0){
-            utils::PrintTextWithDelay("Your turn. Choose: 1. Attack, 2. Block, 3. Run away", 60);
+            utils::PrintTextWithDelay("Your turn. Choose: 1. Attack, 2. Block, 3. Run away\r\n", 60);
             inputSelection = 0;
             while (inputSelection < 1 || inputSelection > 3) {
                 std::cin >> inputSelection;
@@ -203,13 +214,12 @@ void GameSession::Combat(){
                         break;
                     case 3:
                         utils::PrintTextWithDelay("You run away successfully, returning to map... \r\n", 60);
+                        utils::PromptUserToContinue();
                         break;
                     default:
                         break;
                 }
             }
-
-
         } else {
             utils::PrintTextWithDelay("The enemy attacks you, dealing ", 60);
             if (inputSelection != 2) {
@@ -221,12 +231,13 @@ void GameSession::Combat(){
         }
         
         if (NPCs.at(0)->GetHealth() == 0){
-            utils::PrintTextWithDelay("Enemy defeated, returning to map... ", 60);
+            utils::PrintTextWithDelay("Enemy defeated, returning to map... \r\n", 60);
             utils::PromptUserToContinue();
+            player->GetLoc()->clearTile();
             break;
         }
         ++turnCounter;
-    } while (utils::PromptUserToContinue() && player->GetHealth() > 0 && NPCs.at(0)->GetHealth() > 0 && inputSelection != 3);
+    } while (/*(turnCounter % 2 == 1 || utils::PromptUserToContinue()) && */player->GetHealth() > 0 && NPCs.at(0)->GetHealth() > 0 && inputSelection != 3);
     delete NPCs.at(0);
     NPCs.at(0) = nullptr;
 }

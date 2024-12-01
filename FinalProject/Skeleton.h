@@ -7,7 +7,8 @@ private:
     
 public:
     Skeleton(int, double);
-    int Attack(Player*);
+//    int Attack(Player*);
     int TakeDamage(int);
+    std::string GetType();
     ~Skeleton();
 };

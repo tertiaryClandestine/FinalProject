@@ -95,4 +95,7 @@ bool Tile::operator==( Tile& rhs){
         return false;
     }
 }
-
+void Tile::clearTile(){
+    setType(' ');
+    setSymbol(' ');
+}

@@ -6,13 +6,13 @@
 class Tile {
     /*
     x = Treasure
-    v = Grass -- 25% chance of enemy
-    w = Tall grass -- 40% chance of enemy
+    v = Grass -- 5% chance of enemy
+    w = Tall grass -- 10% chance of enemy
     @ = Wall
     t = Enemy
     l = Lava
     ! = Player spawn
-      = Empty space -- 5% chance of enemy
+      = Empty space -- 1% chance of enemy
     */
 private:
     char symbol;
@@ -24,8 +24,8 @@ private:
     int enemyChance; //value is
     int x;
     int y;
-    void setSymbol(const char&);
     void setType(const char&);
+    void setSymbol(const char&);
     void setFormatting(std::string);
     
     
@@ -37,6 +37,7 @@ public:
     char getSymbol();
     int getX();
     int getY();
+    void clearTile();
     std::string getFormatting();
     void setPlayerTile();
     std::string getType();

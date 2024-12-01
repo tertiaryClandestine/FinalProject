@@ -129,19 +129,12 @@ void Player::Load(std::string filePath){
 }
 std::string Player::Status(){
     std::stringstream outSS;
-    outSS << "Health: " << health << "/100" << std::endl;
+    outSS << "HP: " << health << "/100" << std::endl;
     outSS << std::fixed << std::setprecision(0);
-    outSS << "Attack Power: " << attackPower << std::endl;
-    outSS << "Gold: " << gold << std::endl;
+    outSS << "AP: " << attackPower << std::endl;
+    outSS << "GP: " << gold << std::endl;
     return outSS.str();
 }
-//Player::Player(){
-//    gameMap = nullptr;
-//    playerLoc = nullptr;
-//    health = 100;
-//    gold = 0;
-//    attackPower = 5;
-//}
 int Player::TakeDamage(int damage){
     int newHealth = GetHealth() - damage >= 0 ? GetHealth() - damage: 0;
     int damageSustained = GetHealth() - newHealth;
