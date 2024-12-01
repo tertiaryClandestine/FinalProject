@@ -150,7 +150,7 @@ int GameSession::DisplaySlots(){
         if (SlotExists(i)) {
             tmpPlayer = new Player(PATH_SAVEDATA + "/" + std::to_string(i) + "/player.txt");
             std::cout << "SlotID: " << i << std::endl;
-            tmpPlayer->Status();
+            std::cout << tmpPlayer->Status();
             delete tmpPlayer;
             tmpPlayer = nullptr;
             std::cout << "------------------------" << std::endl;
@@ -185,25 +185,48 @@ void GameSession::Combat(){
     utils::PromptUserToContinue();
     
     int turnCounter = 0;
+    int inputSelection = 0;
     do {
         if (turnCounter % 2 == 0){
-            utils::PrintTextWithDelay("You attack the enemy, dealing ", 60);
-            utils::PrintTextWithDelay(std::to_string(player->Attack(NPCs.at(0))), 60);
+            utils::PrintTextWithDelay("Your turn. Choose: 1. Attack, 2. Block, 3. Run away", 60);
+            inputSelection = 0;
+            while (inputSelection < 1 || inputSelection > 3) {
+                std::cin >> inputSelection;
+                switch (inputSelection) {
+                    case 1:
+                        utils::PrintTextWithDelay("You attack the enemy, dealing ", 60);
+                        utils::PrintTextWithDelay(std::to_string(player->Attack(NPCs.at(0))), 60);
+                        utils::PrintTextWithDelay(" damage.\r\n", 60);
+                        break;
+                    case 2:
+                        utils::PrintTextWithDelay("You prepare a defensive stance... \r\n", 60);
+                        break;
+                    case 3:
+                        utils::PrintTextWithDelay("You run away successfully, returning to map... \r\n", 60);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
         } else {
             utils::PrintTextWithDelay("The enemy attacks you, dealing ", 60);
-            utils::PrintTextWithDelay(std::to_string(NPCs.at(0)->Attack(player)),60);
+            if (inputSelection != 2) {
+                utils::PrintTextWithDelay(std::to_string(NPCs.at(0)->Attack(player)),60);
+            } else {
+                utils::PrintTextWithDelay(std::to_string(0), 60);
+            }
+            utils::PrintTextWithDelay(" damage.\r\n", 60);
         }
-        utils::PrintTextWithDelay(" damage.\r\n", 60);
+        
         if (NPCs.at(0)->GetHealth() == 0){
             utils::PrintTextWithDelay("Enemy defeated, returning to map... ", 60);
             utils::PromptUserToContinue();
-            delete NPCs.at(0);
-            NPCs.at(0) = nullptr;
             break;
         }
         ++turnCounter;
-    } while (utils::PromptUserToContinue() && player->GetHealth() > 0 && NPCs.at(0)->GetHealth() > 0);
-
-
-
+    } while (utils::PromptUserToContinue() && player->GetHealth() > 0 && NPCs.at(0)->GetHealth() > 0 && inputSelection != 3);
+    delete NPCs.at(0);
+    NPCs.at(0) = nullptr;
 }

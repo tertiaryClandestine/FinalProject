@@ -22,8 +22,8 @@ namespace utils {
     inline bool PromptUserToContinue(){
         char dummyCin = ' ';
         while (dummyCin != 'c'){
-            PrintTextWithDelay("Press 'c' to continue\r\n", 60);
-    //        std::cout << "Press 'c' to continue";
+//            PrintTextWithDelay("Press 'c' to continue\r\n", 60);
+            std::cout << "Press 'c' to continue" << std::endl;
             std::cin >> dummyCin;
         }
         return true;

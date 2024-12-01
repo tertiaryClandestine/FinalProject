@@ -42,6 +42,6 @@ public:
     Tile* GetLoc();
 //    ~Player();
     void Move(int, int);
-    void Status();
+    std::string Status();
     void Save(std::string);
 };

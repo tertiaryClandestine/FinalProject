@@ -127,13 +127,13 @@ void Player::Load(std::string filePath){
     }   
 
 }
-void Player::Status(){
+std::string Player::Status(){
     std::stringstream outSS;
-    outSS << "Health: " << std::to_string(health) << "/100" << std::endl;
+    outSS << "Health: " << health << "/100" << std::endl;
     outSS << std::fixed << std::setprecision(0);
-    outSS << "Attack Power: " << std::to_string(attackPower) << std::endl;
-    outSS << "Gold: " << std::to_string(gold) << std::endl;
-    std::cout << outSS.str();
+    outSS << "Attack Power: " << attackPower << std::endl;
+    outSS << "Gold: " << gold << std::endl;
+    return outSS.str();
 }
 //Player::Player(){
 //    gameMap = nullptr;
